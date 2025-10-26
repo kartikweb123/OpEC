@@ -15,7 +15,8 @@ module alu_4bit (
     wire [3:0] and_result;
     wire [3:0] or_result;
     wire [3:0] sub_result;
-    wire carry_out;
+    wire carry_out_sum;
+    wire carry_out_sub;
     
     wire [3:0] A_ff, B_ff, Result_ff;
     wire [1:0] ALU_Sel_ff;
@@ -32,6 +33,7 @@ module alu_4bit (
     assign B_for_add_sub = (ALU_Sel_ff[0] == 1'b1) ? ~B_ff : B_ff;
     assign carry_in = ALU_Sel_ff[0];
     assign {carry_out, sum_result} = A_ff + B_for_add_sub + {3'b000, carry_in};
+    assign {carry_out, sub_result} = A_ff + B_for_add_sub + {3'b000, carry_in};
     assign Result_ff = 
     		(ALU_Sel_ff == 2'b00) ? sum_result :
     		(ALU_Sel_ff == 2'b01) ? sub_result :

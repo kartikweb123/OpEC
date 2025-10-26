@@ -29,12 +29,6 @@ module alu_4bit(clk, rst_n, A, B, ALU_Sel, Result, Zero);
   wire _25_;
   wire _26_;
   wire _27_;
-  wire _28_;
-  wire _29_;
-  wire _30_;
-  wire _31_;
-  wire _32_;
-  wire _33_;
   input [3:0] A;
   wire [3:0] A;
   input [1:0] ALU_Sel;
@@ -54,315 +48,287 @@ module alu_4bit(clk, rst_n, A, B, ALU_Sel, Result, Zero);
   wire [0:0] \dff_Zero.d ;
   input rst_n;
   wire rst_n;
-  INVX1 _34_ (
-    .A(ALU_Sel_ff[0]),
+  INVX1 _28_ (
+    .A(ALU_Sel_ff[1]),
     .Y(_00_)
   );
-  NAND2X1 _35_ (
-    .A(_00_),
-    .B(ALU_Sel_ff[1]),
+  NAND2X1 _29_ (
+    .A(B_ff[0]),
+    .B(A_ff[0]),
     .Y(_01_)
   );
-  OR2X1 _36_ (
+  OR2X1 _30_ (
     .A(B_ff[0]),
     .B(A_ff[0]),
     .Y(_02_)
   );
-  NAND2X1 _37_ (
-    .A(B_ff[0]),
-    .B(A_ff[0]),
+  OAI21X1 _31_ (
+    .A(ALU_Sel_ff[0]),
+    .B(_00_),
+    .C(_02_),
     .Y(_03_)
   );
-  NAND3X1 _38_ (
-    .A(_01_),
-    .B(_02_),
-    .C(_03_),
-    .Y(_04_)
-  );
-  NOR2X1 _39_ (
-    .A(ALU_Sel_ff[0]),
-    .B(ALU_Sel_ff[1]),
-    .Y(_05_)
-  );
-  OR2X1 _40_ (
-    .A(ALU_Sel_ff[0]),
-    .B(ALU_Sel_ff[1]),
-    .Y(_06_)
-  );
-  OAI21X1 _41_ (
+  MUX2X1 _32_ (
     .A(_03_),
-    .B(_05_),
-    .C(_04_),
+    .B(_00_),
+    .S(_01_),
     .Y(Result_ff[0])
   );
-  MUX2X1 _42_ (
+  NAND2X1 _33_ (
+    .A(ALU_Sel_ff[0]),
+    .B(B_ff[1]),
+    .Y(_04_)
+  );
+  OAI21X1 _34_ (
+    .A(ALU_Sel_ff[0]),
+    .B(B_ff[1]),
+    .C(A_ff[1]),
+    .Y(_05_)
+  );
+  AND2X1 _35_ (
+    .A(_04_),
+    .B(_05_),
+    .Y(_06_)
+  );
+  MUX2X1 _36_ (
     .A(A_ff[0]),
     .B(ALU_Sel_ff[0]),
     .S(B_ff[0]),
     .Y(_07_)
   );
-  NAND2X1 _43_ (
+  XOR2X1 _37_ (
     .A(ALU_Sel_ff[0]),
     .B(B_ff[1]),
     .Y(_08_)
   );
-  OR2X1 _44_ (
-    .A(ALU_Sel_ff[0]),
-    .B(B_ff[1]),
-    .Y(_09_)
-  );
-  AND2X1 _45_ (
-    .A(_08_),
-    .B(_09_),
-    .Y(_10_)
-  );
-  NAND3X1 _46_ (
+  NAND2X1 _38_ (
     .A(A_ff[1]),
     .B(_08_),
-    .C(_09_),
+    .Y(_09_)
+  );
+  XNOR2X1 _39_ (
+    .A(A_ff[1]),
+    .B(_08_),
+    .Y(_10_)
+  );
+  AOI21X1 _40_ (
+    .A(_07_),
+    .B(_10_),
+    .C(ALU_Sel_ff[1]),
     .Y(_11_)
   );
-  AOI21X1 _47_ (
-    .A(_08_),
-    .B(_09_),
-    .C(A_ff[1]),
+  OAI21X1 _41_ (
+    .A(_07_),
+    .B(_10_),
+    .C(_11_),
     .Y(_12_)
   );
-  XNOR2X1 _48_ (
-    .A(A_ff[1]),
-    .B(_10_),
-    .Y(_13_)
-  );
-  XOR2X1 _49_ (
-    .A(_07_),
-    .B(_13_),
-    .Y(_14_)
-  );
-  NAND2X1 _50_ (
-    .A(_05_),
-    .B(_14_),
-    .Y(_15_)
-  );
-  NAND3X1 _51_ (
-    .A(A_ff[1]),
+  OAI21X1 _42_ (
+    .A(_00_),
     .B(_06_),
-    .C(_09_),
-    .Y(_16_)
-  );
-  NAND3X1 _52_ (
-    .A(_08_),
-    .B(_15_),
-    .C(_16_),
+    .C(_12_),
     .Y(Result_ff[1])
   );
-  OAI21X1 _53_ (
+  OAI21X1 _43_ (
     .A(_07_),
-    .B(_12_),
-    .C(_11_),
+    .B(_10_),
+    .C(_09_),
+    .Y(_13_)
+  );
+  OAI21X1 _44_ (
+    .A(ALU_Sel_ff[0]),
+    .B(B_ff[2]),
+    .C(A_ff[2]),
+    .Y(_14_)
+  );
+  XNOR2X1 _45_ (
+    .A(ALU_Sel_ff[0]),
+    .B(B_ff[2]),
+    .Y(_15_)
+  );
+  AOI21X1 _46_ (
+    .A(ALU_Sel_ff[0]),
+    .B(B_ff[2]),
+    .C(_14_),
+    .Y(_16_)
+  );
+  XNOR2X1 _47_ (
+    .A(A_ff[2]),
+    .B(_15_),
     .Y(_17_)
   );
-  NAND2X1 _54_ (
-    .A(ALU_Sel_ff[0]),
-    .B(B_ff[2]),
+  XNOR2X1 _48_ (
+    .A(_13_),
+    .B(_17_),
     .Y(_18_)
   );
-  OR2X1 _55_ (
+  AOI21X1 _49_ (
     .A(ALU_Sel_ff[0]),
     .B(B_ff[2]),
+    .C(_00_),
     .Y(_19_)
   );
-  AND2X1 _56_ (
-    .A(_18_),
-    .B(_19_),
+  AOI22X1 _50_ (
+    .A(_00_),
+    .B(_18_),
+    .C(_19_),
+    .D(_14_),
+    .Y(Result_ff[2])
+  );
+  AOI21X1 _51_ (
+    .A(_13_),
+    .B(_17_),
+    .C(_16_),
     .Y(_20_)
   );
-  NAND2X1 _57_ (
-    .A(A_ff[2]),
-    .B(_19_),
+  XOR2X1 _52_ (
+    .A(ALU_Sel_ff[0]),
+    .B(B_ff[3]),
     .Y(_21_)
   );
-  AND2X1 _58_ (
-    .A(A_ff[2]),
-    .B(_20_),
+  AOI21X1 _53_ (
+    .A(ALU_Sel_ff[0]),
+    .B(B_ff[3]),
+    .C(A_ff[3]),
     .Y(_22_)
   );
-  XOR2X1 _59_ (
-    .A(A_ff[2]),
-    .B(_20_),
+  XNOR2X1 _54_ (
+    .A(A_ff[3]),
+    .B(_21_),
     .Y(_23_)
   );
-  XNOR2X1 _60_ (
-    .A(_17_),
+  XNOR2X1 _55_ (
+    .A(_20_),
     .B(_23_),
     .Y(_24_)
   );
-  AND2X1 _61_ (
-    .A(_06_),
-    .B(_18_),
+  OAI21X1 _56_ (
+    .A(ALU_Sel_ff[0]),
+    .B(B_ff[3]),
+    .C(ALU_Sel_ff[1]),
     .Y(_25_)
   );
-  AOI22X1 _62_ (
-    .A(_05_),
-    .B(_24_),
-    .C(_25_),
-    .D(_21_),
-    .Y(Result_ff[2])
-  );
-  AND2X1 _63_ (
-    .A(ALU_Sel_ff[0]),
-    .B(B_ff[3]),
+  OR2X1 _57_ (
+    .A(_22_),
+    .B(_25_),
     .Y(_26_)
   );
-  OR2X1 _64_ (
-    .A(ALU_Sel_ff[0]),
-    .B(B_ff[3]),
-    .Y(_27_)
-  );
-  AOI21X1 _65_ (
-    .A(A_ff[3]),
-    .B(_27_),
+  OAI21X1 _58_ (
+    .A(ALU_Sel_ff[1]),
+    .B(_24_),
     .C(_26_),
-    .Y(_28_)
-  );
-  AOI21X1 _66_ (
-    .A(_17_),
-    .B(_23_),
-    .C(_22_),
-    .Y(_29_)
-  );
-  OR2X1 _67_ (
-    .A(A_ff[3]),
-    .B(_27_),
-    .Y(_30_)
-  );
-  AOI22X1 _68_ (
-    .A(A_ff[3]),
-    .B(_26_),
-    .C(_28_),
-    .D(_30_),
-    .Y(_31_)
-  );
-  XNOR2X1 _69_ (
-    .A(_29_),
-    .B(_31_),
-    .Y(_32_)
-  );
-  MUX2X1 _70_ (
-    .A(_28_),
-    .B(_32_),
-    .S(_06_),
     .Y(Result_ff[3])
   );
-  OR2X1 _71_ (
-    .A(Result_ff[0]),
-    .B(Result_ff[2]),
-    .Y(_33_)
-  );
-  NOR3X1 _72_ (
+  OR2X1 _59_ (
     .A(Result_ff[1]),
+    .B(Result_ff[2]),
+    .Y(_27_)
+  );
+  NOR3X1 _60_ (
+    .A(Result_ff[0]),
     .B(Result_ff[3]),
-    .C(_33_),
+    .C(_27_),
     .Y(\dff_Zero.d )
   );
-  DFFSR _73_ (
+  DFFSR _61_ (
     .CLK(clk),
     .D(A[0]),
     .Q(A_ff[0]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _74_ (
+  DFFSR _62_ (
     .CLK(clk),
     .D(A[1]),
     .Q(A_ff[1]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _75_ (
+  DFFSR _63_ (
     .CLK(clk),
     .D(A[2]),
     .Q(A_ff[2]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _76_ (
+  DFFSR _64_ (
     .CLK(clk),
     .D(A[3]),
     .Q(A_ff[3]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _77_ (
+  DFFSR _65_ (
     .CLK(clk),
     .D(ALU_Sel[0]),
     .Q(ALU_Sel_ff[0]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _78_ (
+  DFFSR _66_ (
     .CLK(clk),
     .D(ALU_Sel[1]),
     .Q(ALU_Sel_ff[1]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _79_ (
+  DFFSR _67_ (
     .CLK(clk),
     .D(B[0]),
     .Q(B_ff[0]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _80_ (
+  DFFSR _68_ (
     .CLK(clk),
     .D(B[1]),
     .Q(B_ff[1]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _81_ (
+  DFFSR _69_ (
     .CLK(clk),
     .D(B[2]),
     .Q(B_ff[2]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _82_ (
+  DFFSR _70_ (
     .CLK(clk),
     .D(B[3]),
     .Q(B_ff[3]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _83_ (
+  DFFSR _71_ (
     .CLK(clk),
     .D(Result_ff[0]),
     .Q(Result[0]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _84_ (
+  DFFSR _72_ (
     .CLK(clk),
     .D(Result_ff[1]),
     .Q(Result[1]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _85_ (
+  DFFSR _73_ (
     .CLK(clk),
     .D(Result_ff[2]),
     .Q(Result[2]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _86_ (
+  DFFSR _74_ (
     .CLK(clk),
     .D(Result_ff[3]),
     .Q(Result[3]),
     .R(rst_n),
     .S(1'h1)
   );
-  DFFSR _87_ (
+  DFFSR _75_ (
     .CLK(clk),
     .D(\dff_Zero.d ),
     .Q(Zero),

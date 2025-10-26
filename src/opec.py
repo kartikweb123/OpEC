@@ -21,19 +21,19 @@ def create_arg_parser():
     parser.add_argument(
         '--module',
         type=str,
-        help='Name of your top level design.'
+        help='Name of your top level design'
     )
 
     parser.add_argument(
         '--lib',
         type=str,
-        help='Technology liberty (.lib) file'
+        help='Technology .v file containing all stdcells'
     )
 
     parser.add_argument(
         '--output_dir',
         type=str,
-        help='Your desired output directory. This will contain all logs and reports.'
+        help='Your desired output directory. This will contain all logs and reports'
     )
     
     return parser
@@ -41,4 +41,4 @@ def create_arg_parser():
 if __name__ == '__main__':
     parser = create_arg_parser()
     args = parser.parse_args()
-    # print(args)
+    print("Top level module name is:", args.module)

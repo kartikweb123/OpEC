@@ -1,44 +1,16 @@
-import argparse as ap
+# Source code with main function as an entry-point
+from arg_parser import create_arg_parser
+from cleaner import clean_lib_file
 
-def create_arg_parser():
-    parser = ap.ArgumentParser(
-        description='Thanks for using OpEC. Please send any feedbacks to kartikweb@gmail.com',
-        epilog='Example: python3 opec.py'
-    )
-
-    parser.add_argument(
-        '--rtl_dir',
-        type=str,
-        help='Your RTL .v files directory'
-    )
-
-    parser.add_argument(
-        '--netlist',
-        type=str,
-        help='Your flat netlist .v file'
-    )
-
-    parser.add_argument(
-        '--module',
-        type=str,
-        help='Name of your top level design'
-    )
-
-    parser.add_argument(
-        '--lib',
-        type=str,
-        help='Technology .v file containing all stdcells'
-    )
-
-    parser.add_argument(
-        '--output_dir',
-        type=str,
-        help='Your desired output directory. This will contain all logs and reports'
-    )
-    
-    return parser
 
 if __name__ == '__main__':
     parser = create_arg_parser()
     args = parser.parse_args()
-    print("Top level module name is:", args.module)
+    
+    print("\nTop level module name is:", args.module)
+    print("Technology verilog file:", args.lib)
+    print("RTL dirctory:", args.rtl_dir)
+    print("Netlist:", args.netlist)
+    print("Output directory:", args.output_dir)
+    
+    clean_lib_file(args.lib, args.output_dir)

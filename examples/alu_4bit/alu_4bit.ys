@@ -1,0 +1,32 @@
+# 1. Read the design RTL
+read_verilog alu_4bit.v
+
+# 2. Check and select the top module
+hierarchy -check -top alu_4bit
+
+# 3. Perform Generic Synthesis
+# This is the main synthesis pass that converts behavioral RTL (always blocks, assigns) 
+# into a generic netlist of basic gates, adders, and flip-flops.
+synth -top alu_4bit
+
+# 4. Map Flip-Flops to Library Cells
+# This pass replaces the generic flip-flops ($dff) with the specific D-flip-flops from your library.
+dfflibmap -liberty gscl45nm.lib
+
+# 5. Technology Mapping (Logic Optimization and Cell Mapping)
+# This is the most critical step for ASIC synthesis. 
+# It uses the ABC tool to optimize the combinational logic and map the entire design 
+# to the standard cells defined in your Liberty file.
+abc -liberty gscl45nm.lib
+
+# 6. Cleanup and Final Optimization
+# Removes unused wires/cells and runs final logical optimizations.
+clean -purge
+opt
+
+# 7. Write the final gate-level netlist
+# The -noattr flag keeps the output Verilog clean of Yosys-specific attributes.
+write_verilog -noattr alu_4bit_netlist.v
+
+# (Optional) Display a graphical view of the resulting netlist (requires Graphviz)
+# show

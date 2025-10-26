@@ -6,17 +6,13 @@ from pathlib import Path
 
 
 def clean_lib_file(input_file, output_dir):
-    """
-    Removes non-synthesizable elements from libarary
-    verilog file.
-    """
-    print("\nAnalyzing library verilog file...")
+    # Removes non-synthesizable elements from libarary verilog file.
     
     if not os.path.exists(input_file):
-        print("Error: File not found with", input_file)
+        print("ERROR: File not found with", input_file)
         return
     if not os.path.exists(output_dir):
-        print("Error: Invalid output directpry", output_dir)
+        print("ERROR: Invalid output directpry", output_dir)
         return
     
     # Creating output file path

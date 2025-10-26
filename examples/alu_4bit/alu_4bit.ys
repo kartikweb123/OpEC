@@ -1,5 +1,5 @@
 # 1. Read the design RTL
-read_verilog alu_4bit.v
+read_verilog rtl/alu_4bit.v
 
 # 2. Check and select the top module
 hierarchy -check -top alu_4bit
@@ -8,7 +8,7 @@ hierarchy -check -top alu_4bit
 # This is the main synthesis pass that converts behavioral RTL (always blocks, assigns) 
 # into a generic netlist of basic gates, adders, and flip-flops.
 synth -top alu_4bit
-
+flatten
 # 4. Map Flip-Flops to Library Cells
 # This pass replaces the generic flip-flops ($dff) with the specific D-flip-flops from your library.
 dfflibmap -liberty gscl45nm.lib

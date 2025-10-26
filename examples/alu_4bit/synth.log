@@ -8,8 +8,9 @@
 
 -- Executing script file `alu_4bit.ys' --
 
-1. Executing Verilog-2005 frontend: alu_4bit.v
-Parsing Verilog input from `alu_4bit.v' to AST representation.
+1. Executing Verilog-2005 frontend: rtl/alu_4bit.v
+Parsing Verilog input from `rtl/alu_4bit.v' to AST representation.
+Generating RTLIL representation for module `\dff'.
 Generating RTLIL representation for module `\alu_4bit'.
 Successfully finished Verilog frontend.
 
@@ -17,10 +18,40 @@ Successfully finished Verilog frontend.
 
 2.1. Analyzing design hierarchy..
 Top module:  \alu_4bit
+Used module:     \dff
+Parameter \WIDTH = 1
 
-2.2. Analyzing design hierarchy..
+2.2. Executing AST frontend in derive mode using pre-parsed AST for module `\dff'.
+Parameter \WIDTH = 1
+Generating RTLIL representation for module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Parameter \WIDTH = 4
+
+2.3. Executing AST frontend in derive mode using pre-parsed AST for module `\dff'.
+Parameter \WIDTH = 4
+Generating RTLIL representation for module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
+Parameter \WIDTH = 2
+
+2.4. Executing AST frontend in derive mode using pre-parsed AST for module `\dff'.
+Parameter \WIDTH = 2
+Generating RTLIL representation for module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Parameter \WIDTH = 4
+Found cached RTLIL representation for module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
+Parameter \WIDTH = 4
+Found cached RTLIL representation for module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
+
+2.5. Analyzing design hierarchy..
 Top module:  \alu_4bit
-Removed 0 unused modules.
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000001
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000100
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000010
+
+2.6. Analyzing design hierarchy..
+Top module:  \alu_4bit
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000001
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000100
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000010
+Removing unused module `\dff'.
+Removed 1 unused modules.
 
 3. Executing SYNTH pass.
 
@@ -28,9 +59,15 @@ Removed 0 unused modules.
 
 3.1.1. Analyzing design hierarchy..
 Top module:  \alu_4bit
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000001
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000100
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000010
 
 3.1.2. Analyzing design hierarchy..
 Top module:  \alu_4bit
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000001
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000100
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000010
 Removed 0 unused modules.
 
 3.2. Executing PROC pass (convert processes to netlists).
@@ -39,51 +76,79 @@ Removed 0 unused modules.
 Cleaned up 0 empty switches.
 
 3.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
-Removed 1 dead cases from process $proc$alu_4bit.v:42$8 in module alu_4bit.
-Marked 1 switch rules as full_case in process $proc$alu_4bit.v:42$8 in module alu_4bit.
-Removed a total of 1 dead cases.
+Marked 1 switch rules as full_case in process $proc$rtl/dff.v:9$21 in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
+Marked 1 switch rules as full_case in process $proc$rtl/dff.v:9$19 in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Marked 1 switch rules as full_case in process $proc$rtl/dff.v:9$23 in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Removed a total of 0 dead cases.
 
 3.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
-Removed 0 redundant assignments.
-Promoted 1 assignment to connection.
+Removed 3 redundant assignments.
+Promoted 0 assignments to connections.
 
 3.2.4. Executing PROC_INIT pass (extract init attributes).
 
 3.2.5. Executing PROC_ARST pass (detect async resets in processes).
+Found async reset \rst_n in `$paramod\dff\WIDTH=s32'00000000000000000000000000000100.$proc$rtl/dff.v:9$21'.
+Found async reset \rst_n in `$paramod\dff\WIDTH=s32'00000000000000000000000000000001.$proc$rtl/dff.v:9$19'.
+Found async reset \rst_n in `$paramod\dff\WIDTH=s32'00000000000000000000000000000010.$proc$rtl/dff.v:9$23'.
 
 3.2.6. Executing PROC_ROM pass (convert switches to ROMs).
 Converted 0 switches.
-<suppressed ~1 debug messages>
 
 3.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
-Creating decoders for process `\alu_4bit.$proc$alu_4bit.v:42$8'.
-     1/1: $1\Result[3:0]
+Creating decoders for process `$paramod\dff\WIDTH=s32'00000000000000000000000000000100.$proc$rtl/dff.v:9$21'.
+     1/1: $0\q[3:0]
+Creating decoders for process `$paramod\dff\WIDTH=s32'00000000000000000000000000000001.$proc$rtl/dff.v:9$19'.
+     1/1: $0\q[0:0]
+Creating decoders for process `$paramod\dff\WIDTH=s32'00000000000000000000000000000010.$proc$rtl/dff.v:9$23'.
+     1/1: $0\q[1:0]
 
 3.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
-No latch inferred for signal `\alu_4bit.\Result' from process `\alu_4bit.$proc$alu_4bit.v:42$8'.
 
 3.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `$paramod\dff\WIDTH=s32'00000000000000000000000000000100.\q' using process `$paramod\dff\WIDTH=s32'00000000000000000000000000000100.$proc$rtl/dff.v:9$21'.
+  created $adff cell `$procdff$29' with positive edge clock and positive level reset.
+Creating register for signal `$paramod\dff\WIDTH=s32'00000000000000000000000000000001.\q' using process `$paramod\dff\WIDTH=s32'00000000000000000000000000000001.$proc$rtl/dff.v:9$19'.
+  created $adff cell `$procdff$34' with positive edge clock and positive level reset.
+Creating register for signal `$paramod\dff\WIDTH=s32'00000000000000000000000000000010.\q' using process `$paramod\dff\WIDTH=s32'00000000000000000000000000000010.$proc$rtl/dff.v:9$23'.
+  created $adff cell `$procdff$39' with positive edge clock and positive level reset.
 
 3.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
 
 3.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
-Found and cleaned up 1 empty switch in `\alu_4bit.$proc$alu_4bit.v:42$8'.
-Removing empty process `alu_4bit.$proc$alu_4bit.v:42$8'.
-Cleaned up 1 empty switch.
+Removing empty process `$paramod\dff\WIDTH=s32'00000000000000000000000000000100.$proc$rtl/dff.v:9$21'.
+Removing empty process `$paramod\dff\WIDTH=s32'00000000000000000000000000000001.$proc$rtl/dff.v:9$19'.
+Removing empty process `$paramod\dff\WIDTH=s32'00000000000000000000000000000010.$proc$rtl/dff.v:9$23'.
+Cleaned up 0 empty switches.
 
 3.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
+<suppressed ~2 debug messages>
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+<suppressed ~2 debug messages>
 Optimizing module alu_4bit.
 <suppressed ~3 debug messages>
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+<suppressed ~2 debug messages>
 
 3.3. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
 Optimizing module alu_4bit.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
 
 3.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
 Finding unused cells or wires in module \alu_4bit..
-Removed 0 unused cells and 9 unused wires.
-<suppressed ~1 debug messages>
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Removed 6 unused cells and 19 unused wires.
+<suppressed ~10 debug messages>
 
 3.5. Executing CHECK pass (checking for obvious problems).
+Checking module $paramod\dff\WIDTH=s32'00000000000000000000000000000001...
+Checking module $paramod\dff\WIDTH=s32'00000000000000000000000000000010...
+Checking module $paramod\dff\WIDTH=s32'00000000000000000000000000000100...
 Checking module alu_4bit...
 Warning: Wire alu_4bit.\sub_result [3] is used but has no driver.
 Warning: Wire alu_4bit.\sub_result [2] is used but has no driver.
@@ -94,13 +159,28 @@ Found and reported 4 problems.
 3.6. Executing OPT pass (performing simple optimizations).
 
 3.6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
 
 3.6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
 3.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
 Running muxtree optimizer on module \alu_4bit..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
@@ -109,19 +189,31 @@ Removed 0 multiplexer ports.
 <suppressed ~2 debug messages>
 
 3.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
   Optimizing cells in module \alu_4bit.
 Performed a total of 0 changes.
 
 3.6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
 3.6.6. Executing OPT_DFF pass (perform DFF optimizations).
 
 3.6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
 
 3.6.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
 
 3.6.9. Finished OPT passes. (There is nothing left to do.)
@@ -135,6 +227,9 @@ Optimizing module alu_4bit.
 3.7.3. Executing FSM_OPT pass (simple optimizations of FSMs).
 
 3.7.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
 
 3.7.5. Executing FSM_OPT pass (simple optimizations of FSMs).
@@ -148,13 +243,28 @@ Finding unused cells or wires in module \alu_4bit..
 3.8. Executing OPT pass (performing simple optimizations).
 
 3.8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
 
 3.8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
 3.8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
 Running muxtree optimizer on module \alu_4bit..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
@@ -163,44 +273,66 @@ Removed 0 multiplexer ports.
 <suppressed ~2 debug messages>
 
 3.8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
   Optimizing cells in module \alu_4bit.
 Performed a total of 0 changes.
 
 3.8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
 3.8.6. Executing OPT_DFF pass (perform DFF optimizations).
 
 3.8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
 
 3.8.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
 
 3.8.9. Finished OPT passes. (There is nothing left to do.)
 
 3.9. Executing WREDUCE pass (reducing word size of cells).
-Removed top 1 bits (of 5) from port Y of cell alu_4bit.$add$alu_4bit.v:36$7 ($add).
-Removed top 1 bits (of 5) from port A of cell alu_4bit.$add$alu_4bit.v:36$7 ($add).
-Removed top 1 bits (of 2) from port B of cell alu_4bit.$procmux$13_CMP0 ($eq).
-Removed top 1 bits (of 5) from port Y of cell alu_4bit.$add$alu_4bit.v:36$6 ($add).
-Removed top 1 bits (of 5) from wire alu_4bit.$add$alu_4bit.v:36$6_Y.
+Removed top 4 bits (of 5) from port B of cell alu_4bit.$add$rtl/alu_4bit.v:34$9 ($add).
+Removed top 1 bits (of 5) from port Y of cell alu_4bit.$add$rtl/alu_4bit.v:34$9 ($add).
+Removed top 1 bits (of 5) from port A of cell alu_4bit.$add$rtl/alu_4bit.v:34$9 ($add).
+Removed top 1 bits (of 2) from port B of cell alu_4bit.$eq$rtl/alu_4bit.v:37$11 ($eq).
+Removed top 1 bits (of 5) from port Y of cell alu_4bit.$add$rtl/alu_4bit.v:34$8 ($add).
+Removed top 1 bits (of 5) from wire alu_4bit.$add$rtl/alu_4bit.v:34$8_Y.
 
 3.10. Executing PEEPOPT pass (run peephole optimizers).
 
 3.11. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
 Removed 0 unused cells and 2 unused wires.
 <suppressed ~2 debug messages>
 
 3.12. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001:
+  created 0 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010:
+  created 0 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100:
+  created 0 $alu and 0 $macc cells.
 Extracting $alu and $macc cells in module alu_4bit:
-  creating $macc model for $add$alu_4bit.v:36$6 ($add).
-  creating $macc model for $add$alu_4bit.v:36$7 ($add).
-  merging $macc model for $add$alu_4bit.v:36$6 into $add$alu_4bit.v:36$7.
-  creating $alu model for $macc $add$alu_4bit.v:36$7.
-  creating $alu cell for $add$alu_4bit.v:36$7: $auto$alumacc.cc:495:replace_alu$16
+  creating $macc model for $add$rtl/alu_4bit.v:34$8 ($add).
+  creating $macc model for $add$rtl/alu_4bit.v:34$9 ($add).
+  merging $macc model for $add$rtl/alu_4bit.v:34$8 into $add$rtl/alu_4bit.v:34$9.
+  creating $alu model for $macc $add$rtl/alu_4bit.v:34$9.
+  creating $alu cell for $add$rtl/alu_4bit.v:34$9: $auto$alumacc.cc:495:replace_alu$41
   created 1 $alu and 0 $macc cells.
 
 3.13. Executing SHARE pass (SAT-based resource sharing).
@@ -208,13 +340,28 @@ Extracting $alu and $macc cells in module alu_4bit:
 3.14. Executing OPT pass (performing simple optimizations).
 
 3.14.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
 
 3.14.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
 3.14.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
 Running muxtree optimizer on module \alu_4bit..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
@@ -223,26 +370,47 @@ Removed 0 multiplexer ports.
 <suppressed ~2 debug messages>
 
 3.14.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
   Optimizing cells in module \alu_4bit.
 Performed a total of 0 changes.
 
 3.14.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
 3.14.6. Executing OPT_DFF pass (perform DFF optimizations).
 
 3.14.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
 Removed 1 unused cells and 1 unused wires.
 <suppressed ~2 debug messages>
 
 3.14.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
 
 3.14.9. Rerunning OPT passes. (Maybe there is more to do..)
 
 3.14.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
 Running muxtree optimizer on module \alu_4bit..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
@@ -251,19 +419,31 @@ Removed 0 multiplexer ports.
 <suppressed ~2 debug messages>
 
 3.14.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
   Optimizing cells in module \alu_4bit.
 Performed a total of 0 changes.
 
 3.14.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
 3.14.13. Executing OPT_DFF pass (perform DFF optimizations).
 
 3.14.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
 
 3.14.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
 
 3.14.16. Finished OPT passes. (There is nothing left to do.)
@@ -283,6 +463,9 @@ Performed a total of 0 transformations.
 3.15.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
 
 3.15.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
 
 3.15.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
@@ -291,28 +474,43 @@ Finding unused cells or wires in module \alu_4bit..
 Performed a total of 0 transformations.
 
 3.15.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
 
 3.15.10. Executing MEMORY_COLLECT pass (generating $mem cells).
 
 3.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
 
 3.17. Executing OPT pass (performing simple optimizations).
 
 3.17.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
 <suppressed ~3 debug messages>
 
 3.17.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
 3.17.3. Executing OPT_DFF pass (perform DFF optimizations).
 
 3.17.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
-Removed 1 unused cells and 1 unused wires.
+Removed 1 unused cells and 2 unused wires.
 <suppressed ~2 debug messages>
 
 3.17.5. Finished fast OPT passes.
@@ -322,14 +520,29 @@ Removed 1 unused cells and 1 unused wires.
 3.19. Executing OPT pass (performing simple optimizations).
 
 3.19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
 <suppressed ~1 debug messages>
 
 3.19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
 3.19.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
 Running muxtree optimizer on module \alu_4bit..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
@@ -338,10 +551,16 @@ Removed 0 multiplexer ports.
 <suppressed ~2 debug messages>
 
 3.19.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
   Optimizing cells in module \alu_4bit.
 Performed a total of 0 changes.
 
 3.19.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
@@ -350,16 +569,31 @@ Removed a total of 0 cells.
 3.19.7. Executing OPT_DFF pass (perform DFF optimizations).
 
 3.19.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
-Removed 1 unused cells and 1 unused wires.
+Removed 1 unused cells and 2 unused wires.
 <suppressed ~2 debug messages>
 
 3.19.9. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
 
 3.19.10. Rerunning OPT passes. (Maybe there is more to do..)
 
 3.19.11. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
 Running muxtree optimizer on module \alu_4bit..
   Creating internal representation of mux trees.
   Evaluating internal representation of mux trees.
@@ -368,10 +602,16 @@ Removed 0 multiplexer ports.
 <suppressed ~2 debug messages>
 
 3.19.12. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+  Optimizing cells in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
   Optimizing cells in module \alu_4bit.
 Performed a total of 0 changes.
 
 3.19.13. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
@@ -380,9 +620,15 @@ Removed a total of 0 cells.
 3.19.15. Executing OPT_DFF pass (perform DFF optimizations).
 
 3.19.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
 
 3.19.17. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
 
 3.19.18. Finished OPT passes. (There is nothing left to do.)
@@ -425,40 +671,62 @@ Using extmapper simplemap for cells of type $mux.
 Using extmapper simplemap for cells of type $logic_not.
 Using extmapper simplemap for cells of type $eq.
 Using template $paramod$740b056ede97228d3eae64ea2fdc81f0a33e0fe7\_90_alu for cells of type $alu.
-Using template $paramod$bf2533632d512eac76dd186c0da49367e29b8e98\_90_pmux for cells of type $pmux.
 Using extmapper simplemap for cells of type $xor.
 Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000000100 for cells of type $lcu.
 Using extmapper simplemap for cells of type $pos.
-Using extmapper simplemap for cells of type $reduce_or.
+Using extmapper simplemap for cells of type $adff.
 No more expansions possible.
-<suppressed ~252 debug messages>
+<suppressed ~235 debug messages>
 
 3.21. Executing OPT pass (performing simple optimizations).
 
 3.21.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
-<suppressed ~9 debug messages>
+<suppressed ~15 debug messages>
 
 3.21.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
-<suppressed ~3 debug messages>
-Removed a total of 1 cells.
+Removed a total of 0 cells.
 
 3.21.3. Executing OPT_DFF pass (perform DFF optimizations).
 
 3.21.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
-Removed 10 unused cells and 54 unused wires.
-<suppressed ~11 debug messages>
+Removed 12 unused cells and 32 unused wires.
+<suppressed ~13 debug messages>
 
 3.21.5. Finished fast OPT passes.
 
 3.22. Executing ABC pass (technology mapping using ABC).
 
-3.22.1. Extracting gate netlist of module `\alu_4bit' to `<abc-temp-dir>/input.blif'..
-Extracted 60 gates and 70 wires to a netlist network with 10 inputs and 5 outputs.
+3.22.1. Extracting gate netlist of module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001' to `<abc-temp-dir>/input.blif'..
+Extracted 0 gates and 0 wires to a netlist network with 0 inputs and 0 outputs.
+Don't call ABC as there is nothing to map.
+Removing temp directory.
 
-3.22.1.1. Executing ABC.
+3.22.2. Extracting gate netlist of module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010' to `<abc-temp-dir>/input.blif'..
+Extracted 0 gates and 0 wires to a netlist network with 0 inputs and 0 outputs.
+Don't call ABC as there is nothing to map.
+Removing temp directory.
+
+3.22.3. Extracting gate netlist of module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100' to `<abc-temp-dir>/input.blif'..
+Extracted 0 gates and 0 wires to a netlist network with 0 inputs and 0 outputs.
+Don't call ABC as there is nothing to map.
+Removing temp directory.
+
+3.22.4. Extracting gate netlist of module `\alu_4bit' to `<abc-temp-dir>/input.blif'..
+Extracted 48 gates and 58 wires to a netlist network with 10 inputs and 5 outputs.
+
+3.22.4.1. Executing ABC.
 Running ABC command: "abc" -s -f <abc-temp-dir>/abc.script 2>&1
 ABC: ABC command line: "source <abc-temp-dir>/abc.script".
 ABC: 
@@ -470,18 +738,16 @@ ABC: + dretime
 ABC: + map 
 ABC: + write_blif <abc-temp-dir>/output.blif 
 
-3.22.1.2. Re-integrating ABC results.
-ABC RESULTS:               AND cells:        1
-ABC RESULTS:            ANDNOT cells:       15
-ABC RESULTS:               MUX cells:        5
-ABC RESULTS:              NAND cells:        4
-ABC RESULTS:               NOR cells:        5
-ABC RESULTS:               NOT cells:        5
+3.22.4.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:        4
+ABC RESULTS:            ANDNOT cells:        7
+ABC RESULTS:               MUX cells:        9
+ABC RESULTS:               NOR cells:        2
+ABC RESULTS:               NOT cells:        6
 ABC RESULTS:                OR cells:        6
-ABC RESULTS:             ORNOT cells:        1
 ABC RESULTS:              XNOR cells:        6
 ABC RESULTS:               XOR cells:        6
-ABC RESULTS:        internal signals:       55
+ABC RESULTS:        internal signals:       43
 ABC RESULTS:           input signals:       10
 ABC RESULTS:          output signals:        5
 Removing temp directory.
@@ -489,17 +755,26 @@ Removing temp directory.
 3.23. Executing OPT pass (performing simple optimizations).
 
 3.23.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Optimizing module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
 Optimizing module alu_4bit.
 
 3.23.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000001'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000010'.
+Finding identical cells in module `$paramod\dff\WIDTH=s32'00000000000000000000000000000100'.
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
 3.23.3. Executing OPT_DFF pass (perform DFF optimizations).
 
 3.23.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000001..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000010..
+Finding unused cells or wires in module $paramod\dff\WIDTH=s32'00000000000000000000000000000100..
 Finding unused cells or wires in module \alu_4bit..
-Removed 0 unused cells and 36 unused wires.
+Removed 0 unused cells and 32 unused wires.
 <suppressed ~5 debug messages>
 
 3.23.5. Finished fast OPT passes.
@@ -509,41 +784,126 @@ Attribute `top' found on module `alu_4bit'. Setting top module to alu_4bit.
 
 3.24.1. Analyzing design hierarchy..
 Top module:  \alu_4bit
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000100
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000010
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000001
 
 3.24.2. Analyzing design hierarchy..
 Top module:  \alu_4bit
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000100
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000010
+Used module:     $paramod\dff\WIDTH=s32'00000000000000000000000000000001
 Removed 0 unused modules.
 
 3.25. Printing statistics.
 
-=== alu_4bit ===
+=== $paramod\dff\WIDTH=s32'00000000000000000000000000000001 ===
 
-   Number of wires:                 56
-   Number of wire bits:             69
-   Number of public wires:           7
-   Number of public wire bits:      20
-   Number of ports:                  5
-   Number of port bits:             15
+   Number of wires:                  4
+   Number of wire bits:              4
+   Number of public wires:           4
+   Number of public wire bits:       4
+   Number of ports:                  4
+   Number of port bits:              4
    Number of memories:               0
    Number of memory bits:            0
    Number of processes:              0
-   Number of cells:                 54
-     $_ANDNOT_                      15
-     $_AND_                          1
-     $_MUX_                          5
-     $_NAND_                         4
-     $_NOR_                          5
-     $_NOT_                          5
-     $_ORNOT_                        1
+   Number of cells:                  1
+     $_DFF_PN0_                      1
+
+=== $paramod\dff\WIDTH=s32'00000000000000000000000000000010 ===
+
+   Number of wires:                  4
+   Number of wire bits:              6
+   Number of public wires:           4
+   Number of public wire bits:       6
+   Number of ports:                  4
+   Number of port bits:              6
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  2
+     $_DFF_PN0_                      2
+
+=== $paramod\dff\WIDTH=s32'00000000000000000000000000000100 ===
+
+   Number of wires:                  4
+   Number of wire bits:             10
+   Number of public wires:           4
+   Number of public wire bits:      10
+   Number of ports:                  4
+   Number of port bits:             10
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  4
+     $_DFF_PN0_                      4
+
+=== alu_4bit ===
+
+   Number of wires:                 55
+   Number of wire bits:             78
+   Number of public wires:          14
+   Number of public wire bits:      37
+   Number of ports:                  7
+   Number of port bits:             17
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 51
+     $_ANDNOT_                       7
+     $_AND_                          4
+     $_MUX_                          9
+     $_NOR_                          2
+     $_NOT_                          6
+     $_OR_                           6
+     $_XNOR_                         6
+     $_XOR_                          6
+     $paramod\dff\WIDTH=s32'00000000000000000000000000000001      1
+     $paramod\dff\WIDTH=s32'00000000000000000000000000000010      1
+     $paramod\dff\WIDTH=s32'00000000000000000000000000000100      3
+
+=== design hierarchy ===
+
+   alu_4bit                          1
+     $paramod\dff\WIDTH=s32'00000000000000000000000000000001      1
+     $paramod\dff\WIDTH=s32'00000000000000000000000000000010      1
+     $paramod\dff\WIDTH=s32'00000000000000000000000000000100      3
+
+   Number of wires:                 75
+   Number of wire bits:            118
+   Number of public wires:          34
+   Number of public wire bits:      77
+   Number of ports:                 27
+   Number of port bits:             57
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 61
+     $_ANDNOT_                       7
+     $_AND_                          4
+     $_DFF_PN0_                     15
+     $_MUX_                          9
+     $_NOR_                          2
+     $_NOT_                          6
      $_OR_                           6
      $_XNOR_                         6
      $_XOR_                          6
 
 3.26. Executing CHECK pass (checking for obvious problems).
+Checking module $paramod\dff\WIDTH=s32'00000000000000000000000000000001...
+Checking module $paramod\dff\WIDTH=s32'00000000000000000000000000000010...
+Checking module $paramod\dff\WIDTH=s32'00000000000000000000000000000100...
 Checking module alu_4bit...
 Found and reported 0 problems.
 
-4. Executing DFFLIBMAP pass (mapping DFF cells to sequential cells from liberty file).
+4. Executing FLATTEN pass (flatten design).
+Deleting now unused module $paramod\dff\WIDTH=s32'00000000000000000000000000000001.
+Deleting now unused module $paramod\dff\WIDTH=s32'00000000000000000000000000000010.
+Deleting now unused module $paramod\dff\WIDTH=s32'00000000000000000000000000000100.
+<suppressed ~5 debug messages>
+
+5. Executing DFFLIBMAP pass (mapping DFF cells to sequential cells from liberty file).
   cell DFFNEGX1 (noninv, pins=3, area=7.98) is a direct match for cell type $_DFF_N_.
   cell DFFPOSX1 (noninv, pins=3, area=7.98) is a direct match for cell type $_DFF_P_.
   cell DFFSR (noninv, pins=5, area=10.32) is a direct match for cell type $_DFFSR_PNN_.
@@ -571,20 +931,21 @@ Found and reported 0 problems.
     unmapped dff cell: $_DFFSR_PPN_
     unmapped dff cell: $_DFFSR_PPP_
 
-4.1. Executing DFFLEGALIZE pass (convert FFs to types supported by the target).
+5.1. Executing DFFLEGALIZE pass (convert FFs to types supported by the target).
 Mapping DFF cells in module `\alu_4bit':
+  mapped 15 $_DFFSR_PNN_ cells to \DFFSR cells.
 
-5. Executing ABC pass (technology mapping using ABC).
+6. Executing ABC pass (technology mapping using ABC).
 
-5.1. Extracting gate netlist of module `\alu_4bit' to `<abc-temp-dir>/input.blif'..
-Extracted 54 gates and 64 wires to a netlist network with 10 inputs and 5 outputs.
+6.1. Extracting gate netlist of module `\alu_4bit' to `<abc-temp-dir>/input.blif'..
+Extracted 46 gates and 56 wires to a netlist network with 10 inputs and 5 outputs.
 
-5.1.1. Executing ABC.
+6.1.1. Executing ABC.
 Running ABC command: "abc" -s -f <abc-temp-dir>/abc.script 2>&1
 ABC: ABC command line: "source <abc-temp-dir>/abc.script".
 ABC: 
 ABC: + read_blif <abc-temp-dir>/input.blif 
-ABC: + read_lib -w /home/user/Codes/verilog/simple/gscl45nm.lib 
+ABC: + read_lib -w /home/user/Projects/OpEC/examples/alu_4bit/gscl45nm.lib 
 ABC: Parsing finished successfully.  Parsing time =     0.01 sec
 ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFNEGX1".
 ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFPOSX1".
@@ -592,7 +953,7 @@ ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSR".
 ABC: Scl_LibertyReadGenlib() skipped sequential cell "LATCH".
 ABC: Scl_LibertyReadGenlib() skipped three-state cell "TBUFX1".
 ABC: Scl_LibertyReadGenlib() skipped three-state cell "TBUFX2".
-ABC: Library "gscl45nm" from "/home/user/Codes/verilog/simple/gscl45nm.lib" has 25 cells (6 skipped: 4 seq; 2 tri-state; 0 no func; 0 dont_use).  Time =     0.01 sec
+ABC: Library "gscl45nm" from "/home/user/Projects/OpEC/examples/alu_4bit/gscl45nm.lib" has 25 cells (6 skipped: 4 seq; 2 tri-state; 0 no func; 0 dont_use).  Time =     0.01 sec
 ABC: Memory =    0.36 MB. Time =     0.01 sec
 ABC: Warning: Detected 2 multi-output gates (for example, "FAX1").
 ABC: + strash 
@@ -610,65 +971,67 @@ ABC: + &nf
 ABC: + &put 
 ABC: + write_blif <abc-temp-dir>/output.blif 
 
-5.1.2. Re-integrating ABC results.
-ABC RESULTS:            AND2X1 cells:        1
-ABC RESULTS:           AOI21X1 cells:        5
-ABC RESULTS:           AOI22X1 cells:        1
-ABC RESULTS:             INVX1 cells:        2
-ABC RESULTS:            MUX2X1 cells:        3
-ABC RESULTS:           NAND2X1 cells:        4
+6.1.2. Re-integrating ABC results.
+ABC RESULTS:            AND2X1 cells:        5
+ABC RESULTS:           AOI21X1 cells:        3
+ABC RESULTS:           AOI22X1 cells:        2
+ABC RESULTS:             INVX1 cells:        1
+ABC RESULTS:            MUX2X1 cells:        2
+ABC RESULTS:           NAND2X1 cells:        6
+ABC RESULTS:           NAND3X1 cells:        4
+ABC RESULTS:            NOR2X1 cells:        1
 ABC RESULTS:            NOR3X1 cells:        1
-ABC RESULTS:           OAI21X1 cells:        5
-ABC RESULTS:             OR2X1 cells:        5
-ABC RESULTS:           XNOR2X1 cells:        4
-ABC RESULTS:            XOR2X1 cells:        3
-ABC RESULTS:        internal signals:       49
+ABC RESULTS:           OAI21X1 cells:        2
+ABC RESULTS:             OR2X1 cells:        7
+ABC RESULTS:           XNOR2X1 cells:        3
+ABC RESULTS:            XOR2X1 cells:        2
+ABC RESULTS:        internal signals:       41
 ABC RESULTS:           input signals:       10
 ABC RESULTS:          output signals:        5
 Removing temp directory.
-Removed 0 unused cells and 66 unused wires.
+Removed 0 unused cells and 78 unused wires.
 
-6. Executing OPT pass (performing simple optimizations).
+7. Executing OPT pass (performing simple optimizations).
 
-6.1. Executing OPT_EXPR pass (perform const folding).
+7.1. Executing OPT_EXPR pass (perform const folding).
 Optimizing module alu_4bit.
 
-6.2. Executing OPT_MERGE pass (detect identical cells).
+7.2. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
-6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+7.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
 Running muxtree optimizer on module \alu_4bit..
   Creating internal representation of mux trees.
   No muxes found in this module.
 Removed 0 multiplexer ports.
 
-6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+7.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
   Optimizing cells in module \alu_4bit.
 Performed a total of 0 changes.
 
-6.5. Executing OPT_MERGE pass (detect identical cells).
+7.5. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\alu_4bit'.
 Removed a total of 0 cells.
 
-6.6. Executing OPT_DFF pass (perform DFF optimizations).
+7.6. Executing OPT_DFF pass (perform DFF optimizations).
 
-6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+7.7. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \alu_4bit..
 
-6.8. Executing OPT_EXPR pass (perform const folding).
+7.8. Executing OPT_EXPR pass (perform const folding).
 Optimizing module alu_4bit.
 
-6.9. Finished OPT passes. (There is nothing left to do.)
+7.9. Finished OPT passes. (There is nothing left to do.)
 
-7. Executing Verilog backend.
+8. Executing Verilog backend.
 
-7.1. Executing BMUXMAP pass.
+8.1. Executing BMUXMAP pass.
 
-7.2. Executing DEMUXMAP pass.
+8.2. Executing DEMUXMAP pass.
 Dumping module `\alu_4bit'.
 
 Warnings: 4 unique messages, 4 total
-End of script. Logfile hash: c9a1071d65, CPU: user 0.17s system 0.01s, MEM: 32.80 MB peak
+End of script. Logfile hash: 2aee023755, CPU: user 0.28s system 0.01s, MEM: 32.96 MB peak
 Yosys 0.54 (git sha1 db72ec3bd, g++ 15.2.1 -march=x86-64 -mtune=generic -O2 -fno-plt -fexceptions -fstack-clash-protection -fcf-protection -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/yosys/src=/usr/src/debug/yosys -fPIC -O3)
-Time spent: 66% 2x abc (0 sec), 9% 19x opt_expr (0 sec), ...
+Time spent: 50% 2x abc (0 sec), 16% 19x opt_expr (0 sec), ...

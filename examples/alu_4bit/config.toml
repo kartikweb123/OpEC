@@ -1,0 +1,40 @@
+# config.toml
+[general]
+rtl_dir = "/home/user/Projects/OpEC/examples/alu_4bit/rtl"
+output_dir = "/home/user/Projects/OpEC/examples/alu_4bit/"
+netlist_file = "/home/user/Projects/OpEC/examples/alu_4bit/alu_4bit_netlist.v"
+top_module = "alu_4bit"
+mapping_file = "mapping.csv"  # optional external map if large
+lib_verilog_file = "/home/user/Projects/OpEC/examples/alu_4bit/gscl45nm.v" # technology library verilog file
+lib_file = "/home/user/Projects/OpEC/examples/alu_4bit/gscl45nm.lib" # technology library liberty file
+
+[clock_reset]
+clk = "clk"
+reset = "rst_n"
+reset_active_low = true
+
+# Optional DC signals
+[power]
+vcc = "VDD"
+vss = "VSS"
+
+# These define 1:1 mappings between RTL and Netlist flip-flops
+# Useful if synthesis renamed them
+[flops]
+mappings = [
+  { rtl = "u_core/reg_a", netlist = "U1001" },
+  { rtl = "u_core/reg_b", netlist = "U1002" },
+]
+
+# Optional flops — your LEC can skip equivalence on these
+optional = [
+  "u_debug/debug_reg",
+  "u_trace/trace_ff",
+]
+
+[compare]
+# Set scope of equivalence checking
+mode = "full"   # could be: "full", "block", or "custom"
+ignore_signals = ["scan_en", "test_mode"]
+tolerance = "bitwise" # could also be "functional"
+

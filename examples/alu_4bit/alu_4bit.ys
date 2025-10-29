@@ -1,6 +1,9 @@
 # 1. Read the design RTL
 read_verilog rtl/alu_4bit.v
 
+# read liberty
+read_liberty -lib gscl45nm.lib
+
 # 2. Check and select the top module
 hierarchy -check -top alu_4bit
 
@@ -9,6 +12,10 @@ hierarchy -check -top alu_4bit
 # into a generic netlist of basic gates, adders, and flip-flops.
 synth -top alu_4bit
 flatten
+
+proc; opt;
+techmap; opt;
+
 # 4. Map Flip-Flops to Library Cells
 # This pass replaces the generic flip-flops ($dff) with the specific D-flip-flops from your library.
 dfflibmap -liberty gscl45nm.lib
@@ -18,6 +25,8 @@ dfflibmap -liberty gscl45nm.lib
 # It uses the ABC tool to optimize the combinational logic and map the entire design 
 # to the standard cells defined in your Liberty file.
 abc -liberty gscl45nm.lib
+insbuf -buf BUFX2 A Y
+iopadmap -outpad BUFX4 A:Y -bits
 
 # 6. Cleanup and Final Optimization
 # Removes unused wires/cells and runs final logical optimizations.
@@ -27,6 +36,7 @@ opt
 # 7. Write the final gate-level netlist
 # The -noattr flag keeps the output Verilog clean of Yosys-specific attributes.
 write_verilog -noattr alu_4bit_netlist.v
+write_json alu_4bit_netlist.json
 
 # (Optional) Display a graphical view of the resulting netlist (requires Graphviz)
 # show

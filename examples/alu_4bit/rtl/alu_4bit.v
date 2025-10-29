@@ -1,4 +1,4 @@
-// Code your design here
+
 `include "dff.v"
 
 module alu_4bit (
@@ -11,18 +11,18 @@ module alu_4bit (
     output wire Zero           // Flag: 1 if Result is zero, 0 otherwise
 );
 
-    wire [3:0] sum_result;
-    wire [3:0] and_result;
-    wire [3:0] or_result;
-    wire [3:0] sub_result;
-    wire carry_out_sum;
-    wire carry_out_sub;
+    (* keep *) wire [3:0] sum_result;
+    (* keep *) wire [3:0] and_result;
+    (* keep *) wire [3:0] or_result;
+    (* keep *) wire [3:0] sub_result;
+    (* keep *) wire carry_out_sum;
+    (* keep *) wire carry_out_sub;
     
-    wire [3:0] A_ff, B_ff, Result_ff;
-    wire [1:0] ALU_Sel_ff;
-    wire Zero_ff;
-    wire [3:0] B_for_add_sub; // B or NOT B depending on the operation
-    wire carry_in;            // 0 for Add, 1 for Sub
+    (* keep *) wire [3:0] A_ff, B_ff, Result_ff;
+    (* keep *) wire [1:0] ALU_Sel_ff;
+    (* keep *) wire Zero_ff;
+    (* keep *) wire [3:0] B_for_add_sub; // B or NOT B depending on the operation
+    (* keep *) wire carry_in;            // 0 for Add, 1 for Sub
     
 	dff #(.WIDTH(4)) dff_A (.clk(clk), .rst_n(rst_n), .d(A), .q(A_ff));
 	dff #(.WIDTH(4)) dff_B (.clk(clk), .rst_n(rst_n), .d(B), .q(B_ff));
@@ -45,3 +45,4 @@ module alu_4bit (
     dff #(.WIDTH(1)) dff_Zero (.clk(clk), .rst_n(rst_n), .d(Zero_ff), .q(Zero));
 
 endmodule
+

@@ -1,12 +1,12 @@
 # config.toml
 [general]
-rtl_dir = "/home/user/Projects/OpEC/examples/alu_4bit/rtl"
-output_dir = "/home/user/Projects/OpEC/examples/alu_4bit/"
-netlist_file = "/home/user/Projects/OpEC/examples/alu_4bit/alu_4bit_netlist.v"
+rtl_dir = "examples/alu_4bit/rtl"
+output_dir = "examples/alu_4bit/"
+netlist_file = "examples/alu_4bit/alu_4bit_netlist.v"
 top_module = "alu_4bit"
 mapping_file = "mapping.csv"  # optional external map if large
-lib_verilog_file = "/home/user/Projects/OpEC/examples/alu_4bit/gscl45nm.v" # technology library verilog file
-lib_file = "/home/user/Projects/OpEC/examples/alu_4bit/gscl45nm.lib" # technology library liberty file
+lib_verilog_file = "examples/alu_4bit/gscl45nm.v" # technology library verilog file
+lib_file = "examples/alu_4bit/gscl45nm.lib" # technology library liberty file
 
 [clock_reset]
 clk = "clk"

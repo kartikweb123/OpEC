@@ -3,7 +3,7 @@
 
 module alu_4bit (
 	input wire clk,
-	input wire rst_n,
+	input wire rst,
     input wire [3:0] A,             // 4-bit first operand
     input wire [3:0] B,             // 4-bit second operand
     input wire [1:0] ALU_Sel,       // 2-bit operation selector (Op-Code)
@@ -23,6 +23,10 @@ module alu_4bit (
     (* keep *) wire Zero_ff;
     (* keep *) wire [3:0] B_for_add_sub; // B or NOT B depending on the operation
     (* keep *) wire carry_in;            // 0 for Add, 1 for Sub
+
+    wire rst_n;
+    notgate #(.WIDTH(1)) notgate0 (.a(rst), .y(rst_n));
+
     
 	dff #(.WIDTH(4)) dff_A (.clk(clk), .rst_n(rst_n), .d(A), .q(A_ff));
 	dff #(.WIDTH(4)) dff_B (.clk(clk), .rst_n(rst_n), .d(B), .q(B_ff));
@@ -46,3 +50,11 @@ module alu_4bit (
 
 endmodule
 
+module notgate #(parameter WIDTH = 1) (
+    input wire [WIDTH-1:0] a,
+    output wire [WIDTH-1:0] y
+);
+
+assign y = ~a;
+
+endmodule

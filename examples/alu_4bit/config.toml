@@ -10,8 +10,8 @@ lib_file = "examples/alu_4bit/gscl45nm.lib" # technology library liberty file
 
 [clock_reset]
 clk = "clk"
-reset = "rst_n"
-reset_active_low = true
+reset = "rst"
+reset_active_low = false
 
 # Optional DC signals
 [power]

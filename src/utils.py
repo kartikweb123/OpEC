@@ -77,25 +77,120 @@ def get_module_snippet(module, path):
         else:
             return snippet
 
+
 """
 Enhancement needed: 
-1)  Return a dict instead of list where key is reg name and value is its width.
+1)  Return a dict instead of list where key is reg name and value is its width. (done)
 2)  Make it recursive so that the code can jump to instantiated modules inside top module and retain width size from instantiation.
     OR
     Find a way to combine all rtl modules into 1 flat top module.
+3) Add support for localparam. example: localparam MAX_VALUE = (1 << DATA_WIDTH) - 1;
 """
 def get_regs(module_snippet: list):
-    regs = []
-    assign_pattern = re.compile(r'([\w\[\]:]+)\s*<=')  # matches LHS before <=
+    regs = {}
+    params = {}
+    width_def = {}
+    
+    assign_pattern = re.compile(r'([\w\[\]:]+)\s*<=') # matches LHS before <=
+    param_pattern = re.compile(r'parameter\s+(\w+)\s*=\s*([\w\'\+\-\*/]+)', re.IGNORECASE) # matches all parameter definitions
+    signal_pattern = re.compile(r'\b(?:input|output|inout)?\s*(?:reg|logic)\s*(\[[^\]]+\])?\s*(\w+)', re.IGNORECASE) # matches all "reg" and "logic"
     
     for line in module_snippet:
-        match = assign_pattern.search(line)
-        if match:
-            regs.append(match.group(1))
-    
-    return sorted(set(regs))
+        param_match = param_pattern.search(line)
+        assign_match = assign_pattern.search(line)
+        signal_match = signal_pattern.search(line)
+        
+        # capture all parameter with default values
+        if param_match:
+            name, value = param_match.groups()
+            try:
+                params[name] = int(eval(value))  # safe arithmetic only
+            except Exception:
+                params[name] = value  # keep unresolved for now
+        
+        # capture reg definitions with sizes
+        width = 1
+        if signal_match:
+            width_expr, reg_name = signal_match.groups()
+            if width_expr:
+                width_expr = width_expr.strip('[]')
+                if ':' in width_expr:
+                    msb, lsb = [x.strip() for x in width_expr.split(':')]
+                    try:
+                        for k, v in params.items():
+                            msb = msb.replace(k, str(v))
+                            lsb = lsb.replace(k, str(v))
+                        width = abs(eval(msb) - eval(lsb)) + 1
+                    except Exception:
+                        width = f"[(width_expr)]"
+                else:
+                    width = 1
+            width_def[reg_name] = width
+        
+        # capture all sequential regs
+        if assign_match:
+            regs[assign_match.group(1)] = width_def[assign_match.group(1)]
+            
+    # print("parameters:", params)
+    # print("width definition:",width_def)
+    return regs
 
+"""
+Enhancement needed:
+1) unable to parse port definitions: input wire [] a, b;
+2) unable to parse port definitions: input a;
+                                     wire [] a;
+"""
+def get_ports(module_snippet: list):
+    inputs = {}
+    outputs = {}
+    params = {}
 
+    # Combine snippet into one text
+    snippet_text = "\n".join(module_snippet)
+
+    # --- remove single-line comments ---
+    snippet_text = re.sub(r'//.*', '', snippet_text)
+
+    # --- capture parameters ---
+    param_pattern = re.compile(r'parameter\s+(\w+)\s*=\s*([\w\'\+\-\*/]+)', re.IGNORECASE)
+    for match in param_pattern.finditer(snippet_text):
+        name, value = match.groups()
+        try:
+            params[name] = int(eval(value))
+        except Exception:
+            params[name] = value
+
+    # --- capture typed input/output declarations (wire/reg only) ---
+    port_pattern = re.compile(r'\b(input|output)\b\s*(?:wire|reg)?\s*(\[[^\]]+\])?\s*([^;,\n]+)', re.IGNORECASE)
+
+    for match in port_pattern.finditer(snippet_text):
+        direction, width_expr, port_name = match.groups()
+        port_name = port_name.strip()
+
+        # calculate width
+        width = 1
+        if width_expr:
+            width_expr = width_expr.strip('[]')
+            if ':' in width_expr:
+                msb, lsb = [x.strip() for x in width_expr.split(':')]
+                try:
+                    for p, v in params.items():
+                        msb = msb.replace(p, str(v))
+                        lsb = lsb.replace(p, str(v))
+                    width = abs(eval(msb) - eval(lsb)) + 1
+                except Exception:
+                    width = f"[{width_expr}]"
+            else:
+                width = 1
+
+        # store in dict
+        if direction.lower() == 'input':
+            inputs[port_name] = width
+        else:
+            outputs[port_name] = width
+
+    return inputs, outputs
 
 
 

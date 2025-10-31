@@ -15,7 +15,7 @@ if __name__ == '__main__':
     OUTPUT_DIR = config['general']['output_dir']
     NETLIST_PATH = config['general']['netlist_file']
     LIB_VERILOG = config['general']['lib_verilog_file']
-    LIB_LIBERTY = config['general']['lib_file']
+    LIB_LIBERTY = config['general']['lib_liberty_file']
     
     print("\nAnalyzing config file...")
     print("Loaded:", args.config)
@@ -49,9 +49,17 @@ if __name__ == '__main__':
     print("Output directory:", OUTPUT_DIR)
     check_dir(OUTPUT_DIR)
 
-    top_module_snippet = get_module_snippet("dff", RTL_MODULES["dff"])
-    # print(top_module_snippet)
-    print("list of regs found:", get_regs(top_module_snippet))
+    dff_module_snippet = get_module_snippet("dff", RTL_MODULES["dff"])
+    print("\nlist of regs found in dff rtl:", get_regs(dff_module_snippet))
+    top_module_snippet = get_module_snippet(TOP_MODULE, RTL_MODULES[TOP_MODULE])
+    print("list of regs found in top rtl:", get_regs(top_module_snippet))
+    
+    dff_input_ports, dff_output_ports = get_ports(dff_module_snippet)
+    print("list of input ports in dff module:", dff_input_ports)
+    print("list of output ports in dff module:", dff_output_ports)
+    top_input_ports, top_output_ports = get_ports(top_module_snippet)
+    print("list of input ports in top module:", top_input_ports)
+    print("list of output ports in top module:", top_output_ports)
     
     
     
